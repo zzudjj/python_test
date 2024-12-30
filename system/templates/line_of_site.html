@@ -1,0 +1,33 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            站点所属线路
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-map-marker-alt c1"></i>
+                 {{ name }}
+            </div>
+            <div class="layui-card-body">
+                {% for field in data%}
+                    <h3>{{ field.line_id }}号路</h3>
+                    <hr>
+                {% endfor %}
+                <div>
+                    <a href="/manager/site_manage" class="layui-btn layui-btn-primary">返回</a>  
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+   
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#line").addClass('layui-nav-itemed')
+        $("#site_manage").addClass('layui-this')
+    </script>
+{% endblock %}

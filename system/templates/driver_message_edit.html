@@ -1,0 +1,55 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            编辑司机信息
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-file-alt c1"></i>
+                 司机信息表单
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ field.label }}</label>
+                            <div class="layui-input-block">
+                                {{ field }}
+                                <span  style="color: red">{{ field.errors.0 }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">电话号码</label>
+                        <div class="layui-input-block">
+                            <input type="text"  placeholder="电话号码" lay-verify="required" class="layui-input" name="telephone_first" value={{ telephone_first }}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">备用电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" placeholder="选填" class="layui-input"  name="telephone_second" value={{ telephone_second }}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <button class="layui-btn" type="submit">确定</button>
+                        <a href="/manager/driver_message_manage" class="layui-btn layui-btn-primary">返回</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+   
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#driver").addClass('layui-nav-itemed')
+        $("#driver_message_manage").addClass('layui-this')
+    </script>
+{% endblock %}

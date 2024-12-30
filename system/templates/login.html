@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+</head>
+<body background="{% static 'img/bus.png' %}">
+ <div class="wrapper">
+     <form method="post" class="box" novalidate>
+         {% csrf_token %}
+         <h2>欢迎登录公交信息管理系统</h2>
+         <div>
+             {{ form.username }}
+             <span style="color: red;font-size: 13px;">{{ form.username.errors.0 }}</span> 
+         </div>
+         <div>
+             {{ form.password }}
+             <span style="color: red;font-size: 13px;">{{ form.password.errors.0 }}</span>
+         </div>
+         <div>
+             <select name="identity">
+                 <option value="0">乘客</option>
+                 <option value="1">司机</option>
+                 <option value="2">管理员</option>
+             </select>
+         </div>
+
+         <button type="submit" class="btn">登录</button>
+
+         <div class="signup-link">
+             <p>没有乘客账号? <a href="/register/">注册</a></p>
+         </div>
+     </form>
+ </div>
+</body>
+</html>

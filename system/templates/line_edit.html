@@ -1,0 +1,86 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            新增线路
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-file-alt c1"></i>
+                 新增线路表单
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" id="form">
+                    {% for field in form %}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ field.label }}</label>
+                            <div class="layui-input-block">
+                                {{ field }}
+                                <span class="error_msg" style="color: red"></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+                <div class="layui-panel" style="padding: 20px 150px">
+
+                    <div id="line_site"></div>
+                </div>
+                <div class="layui-form-item " style="margin-top: 20px">
+                    <button class="layui-btn" type="button" id = 'add' lay-on='getData'>提交</button>
+                    <a href="/manager/line_manage" class="layui-btn layui-btn-primary">返回</a>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#line").addClass('layui-nav-itemed')
+        $("#line_manage").addClass('layui-this')
+    </script>
+    <script>
+        layui.use(function () {
+            var transfer = layui.transfer;
+            var util = layui.util
+            var nid = {{ nid|safe }}
+            // 数据
+            var left_data = {{ left_data|safe }}
+            var right_data = {{ right_data|safe }}
+            // 渲染
+            transfer.render({
+                elem: '#line_site',
+                id: 'line_site',
+                data: left_data,
+                value: right_data,
+                title: ['可选站点', '当前线路站点'],
+                showSearch: true,
+                width: 400,
+                height: 500,
+            });
+            util.on('lay-on',{
+                getData: function () {
+                    var site_data = transfer.getData('line_site');
+                    $.ajax({
+                        url: `/manager/line_manage/${nid}/line_edit`,
+                        type: 'post',
+                        data:{
+                            'site_data' : site_data,
+                            'id' : $('#id_id').val(),
+                        },
+                        dataType: 'JSON',
+                        success: function (res) {
+                            if (res.status) {
+                                alert('编辑成功');
+                                window.location.href='/manager/line_manage'
+                            } 
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+{% endblock %}

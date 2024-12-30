@@ -1,0 +1,66 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            新增车辆
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-file-alt c1"></i>
+                 新增车辆表单
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" id="form">
+                    {% for field in form %}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ field.label }}</label>
+                            <div class="layui-input-block">
+                                {{ field }}
+                                <span class="error_msg" style="color: red"></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+                 <div class="layui-form-item ">
+                        <button class="layui-btn" type="button" id = 'add'>新增</button>
+                        <a href="/manager/bus_manage" class="layui-btn layui-btn-primary">返回</a>
+                 </div>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+   
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#bus").addClass('layui-this')
+    </script>
+    <script type="text/javascript">
+       $(function () {
+            bindEvent()
+       })
+       function bindEvent() {
+           $('#add').click(function () {
+               $('.error_msg').empty();
+               $.ajax({
+                   url: '/manager/bus_manage/bus_add',
+                   type: 'post',
+                   data: $('#form').serialize(),
+                   dataType: 'JSON',
+                   success: function (res) {
+                       if(res.status){
+                           alert('添加成功');
+                       } else {
+                           $.each(res.errors,function (name,data){
+                               $("#id_"+name).next().text(data[0]);
+                           })
+                       }
+                   }
+               })
+           })
+       }
+    </script>
+{% endblock %}

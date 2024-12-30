@@ -1,0 +1,33 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            公告详情
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-route c1"></i>
+                 公告具体内容
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-panel">
+                    <div style="padding: 20px; text-align: center"><h3>{{ title }}</h3></div>
+                    <div style="padding-left: 20px;padding-right: 20px;padding-bottom: 20px;">{{ text }}</div>
+                </div>
+                <div style="margin-top: 10px;display: flex;justify-content: center">
+                    <a href="/manager/announcement" class="layui-btn layui-btn-primary">返回</a>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#notice").addClass('layui-nav-itemed')
+        $("#announcement").addClass('layui-this')
+    </script>
+{% endblock %}

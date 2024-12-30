@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乘客注册</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+</head>
+<body background="{% static 'img/bus.png' %}">
+ <div class="wrapper">
+     <form method="post" class="box" novalidate>
+         {% csrf_token %}
+         <h2>乘客注册</h2>
+         {% for field in modelform %}
+         <div>
+             {{ field }}
+            <span style="color: red;font-size: 13px;">{{ field.errors.0 }}</span>
+         </div>
+         {% endfor %}
+         <button type="submit" class="btn">注册</button>
+     </form>
+ </div>
+</body>
+</html>

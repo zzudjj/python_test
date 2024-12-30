@@ -1,0 +1,42 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            编辑车辆信息
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-file-alt c1"></i>
+                 编辑车辆表单
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ field.label }}</label>
+                            <div class="layui-input-block">
+                                {{ field }}
+                                <span  style="color: red">{{ field.errors.0 }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="layui-form-item ">
+                        <button class="layui-btn" type="submit">确定</button>
+                        <a href="/manager/bus_manage" class="layui-btn layui-btn-primary">返回</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+   
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#bus").addClass('layui-this')
+    </script>
+{% endblock %}

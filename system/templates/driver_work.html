@@ -1,0 +1,48 @@
+{% extends 'driver_base.html' %}
+{% block body %}
+     <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            值班安排
+        </blockquote>
+        <div class="layui-card layui-panel" >
+            <div class="layui-card-header">
+                <i class="fas fa-list c1"></i>
+                    值班表
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="test"></table>
+            </div>
+        </div>
+         <br><br>
+     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#work").addClass('layui-this')
+    </script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            var site = {{ form|safe }};
+            // 已知数据渲染
+            var inst = table.render({
+                elem: '#test',
+                cols: [[ //标题栏
+                    {field: 'driver_id', title: '工号',  sort: true},
+                    {field: 'name', title: '姓名'},
+                    {field: 'plate_number', title:'值班车辆'},
+                    {field: 'start_time', title:'开始时间'},
+                    {field: 'end_time', title:'结束时间'},
+                ]],
+                data: site,
+                //skin: 'line', // 表格风格
+                //even: true,
+                page: true, // 是否显示分页
+                limits: [5, 10, 15],
+                limit: 5 // 每页默认显示的数量
+            });
+
+        });
+    </script>
+{% endblock %}

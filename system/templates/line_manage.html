@@ -1,0 +1,77 @@
+{% extends 'manager_base.html' %}
+
+{% block body %}
+     <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            线路管理
+        </blockquote>
+        <div class="layui-card layui-panel" >
+            <div class="layui-card-header">
+                <i class="fas fa-list c1"></i>
+                线路表
+                 <a href="/manager/line_manage/line_add" class="layui-btn layui-btn-primary layui-btn-radius layui-layout-right" style="margin-right: 30px;margin-top: 2px">
+                     新增线路
+                 </a>
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="test"></table>
+            </div>
+        </div>
+         <br><br>
+     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#line").addClass('layui-nav-itemed')
+        $("#line_manage").addClass('layui-this')
+    </script>
+    <script type="text/html" id="barDemo">
+        <div class="layui-clear-space">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                编辑
+            </a>
+            <a class="layui-btn layui-bg-red layui-btn-xs" lay-event="delete">
+                删除
+            </a>
+            <a class="layui-btn layui-bg-blue layui-btn-xs" lay-event="view">
+                查看
+            </a>
+        </div>
+    </script>  
+     
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            var line = {{ form|safe }};
+            // 已知数据渲染
+            var inst = table.render({
+                elem: '#test',
+                cols: [[ //标题栏
+                    {field: 'id', title: '线路编号',  sort: true},
+                    {field: 'start_site', title: '起点'},
+                    {field: 'end_site', title: '终点'},
+                    {fixed: 'right', title:'操作',  toolbar: '#barDemo'},
+                ]],
+                done: function () {
+                    table.on('tool(test)',function (obj){
+                        var data = obj.data
+                        if (obj.event === 'delete'){
+                            window.location.href=`/manager/line_manage/${data.id}/line_delete`
+                        } else if (obj.event === 'edit'){
+                            window.location.href=`/manager/line_manage/${data.id}/line_edit`
+                        } else if (obj.event === 'view'){
+                            window.location.href=`/manager/line_manage/${data.id}/line_view`
+                        }
+                    });
+                },
+                data: line,
+                //skin: 'line', // 表格风格
+                //even: true,
+                page: true, // 是否显示分页
+                limits: [5, 10, 15],
+                limit: 5 // 每页默认显示的数量
+            });
+        });
+    </script>
+{% endblock %}

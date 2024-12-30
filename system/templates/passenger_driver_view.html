@@ -1,0 +1,40 @@
+{% extends 'passenger_base.html' %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            值班司机信息
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-file-alt c1"></i>
+                 值班信息表单
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" method="post">
+                    {% csrf_token %}
+                    {% for key,value in data.items %}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{{ key }}</label>
+                            <div class="layui-input-block">
+                                <input  class="layui-input" disabled="disabled" value={{ value }}>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="layui-form-item " style="margin-top: 10px;display: flex;justify-content: center">
+                        <a href="/passenger/ride_view" class="layui-btn layui-btn-primary">返回</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+   
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+       $("#ride").addClass('layui-this')
+    </script>
+{% endblock %}

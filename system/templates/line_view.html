@@ -1,0 +1,45 @@
+{% extends 'manager_base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/line_view.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            线路详情查看
+        </blockquote>
+        <div class="layui-card layui-panel">
+             <div class="layui-card-header">
+                <i class="fas fa-route c1"></i>
+                 {{ nid }}号线路
+            </div>
+            <div class="layui-card-body">
+                <div class="stops-wrapper">
+                    <ul class="stops-list bordered">
+                        {% for name in data %}
+                        <li class="stop-container" tabindex="0">
+                            <div class="stop-wrapper" role="link">
+                                <h3>{{ name  }}</h3>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <a href="/manager/line_manage" class="layui-btn layui-btn-primary">返回</a>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#line").addClass('layui-nav-itemed')
+        $("#line_manage").addClass('layui-this')
+    </script>
+{% endblock %}

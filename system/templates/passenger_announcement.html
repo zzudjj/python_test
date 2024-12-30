@@ -1,0 +1,59 @@
+{% extends 'passenger_base.html' %}
+{% block body %}
+     <div style="padding: 15px;">
+        <blockquote class="layui-elem-quote layui-text">
+            公告信息查看
+        </blockquote>
+        <div class="layui-card layui-panel" >
+            <div class="layui-card-header">
+                <i class="fas fa-list c1"></i>
+                    公告栏
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="test"></table>
+            </div>
+        </div>
+         <br><br>
+     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $("#notice").addClass('layui-this')
+    </script>
+    <script type="text/html" id="text_self">
+        <div class="layui-clear-space">
+            <a class="layui-font-blue" lay-event="detail">详情</a>
+        </div>
+    </script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            var site = {{ form|safe }};
+            // 已知数据渲染
+            var inst = table.render({
+                elem: '#test',
+                cols: [[ //标题栏
+                    {field:  'id', hide:true},
+                    {field: 'title', title: '公告标题'},
+                    {field: 'date', title:'发布时间'},
+                    {title:'内容详情',  toolbar: '#text_self'},
+                ]],
+                done: function () {
+                    table.on('tool(test)', function (obj) {
+                        var data = obj.data
+                        if (obj.event === 'detail') {
+                            window.location.href = `/passenger/announcement/${data.id}/announcement_view`
+                        }
+                    });
+                },
+                data: site,
+                //skin: 'line', // 表格风格
+                //even: true,
+                page: true, // 是否显示分页
+                limits: [5, 10, 15],
+                limit: 5 // 每页默认显示的数量
+            });
+        });
+    </script>
+{% endblock %}
